@@ -29,6 +29,11 @@ class TestSSL < Test::Unit::TestCase
     assert last_response.ok?
   end
 
+  def test_allows_forwarded_port_proxy_header_url
+    get "http://example.org/", {}, 'HTTP_X_FORWARDED_PORT' => "443"
+    assert last_response.ok?
+  end
+
   def test_redirects_http_to_https
     get "http://example.org/path?key=value"
     assert last_response.redirect?
